@@ -18,10 +18,26 @@ carved_board = -1
 
 
 def is_valid(x, y):
+    
+    '''
+    Checks if an 'x' and a 'y' coordinate are in the bounds of a board.
+    '''
+    
     return 0 <= x < WIDTH and 0 <= y < HEIGHT
 
 
 def carve_out_board(board, curr_i, curr_j):
+
+    '''
+    All this function does is fill the board with random numbers from 1 to WIDTH (inclusive), making sure that each number is not repeated
+    in the same row or column (thus, following the rules of ken_ken). An empty cell will have a value of 0. The program tries to fill in the
+    current cell ('curr_i' , 'curr_j') with a valid number (a number that is not repeated in a row or a column). Once that valid number is
+    found, it recurses to the next number by adding 1 to curr_j. However, if curr_j is equivalent to the width of that board (i.e., it has
+    reached the end of it's row), 1 will be added to curr_i (moving down a row), and, curr_j will equal 0 (to begin with the first cell in
+    the new row).
+    Once all of the cells have been filled, we save that valid baord into carved board, and all other recursion call stacks will be stopped.
+    '''
+    
     global carved_board
     if carved_board != -1:
         return
@@ -49,12 +65,23 @@ def carve_out_board(board, curr_i, curr_j):
             carve_out_board(board, curr_i, curr_j + 1)
             board[curr_i][curr_j] = 0
 
-
 splitted_board = -1
 trackings = -1
 
-
 def split_out_board(board, counters, curr_ss, curr_i, curr_j, t):
+    
+    '''
+    This function carves out the 'cells' in the board. Each cell will store 1 to 4 values (inclusive). We keep track of the amount of values
+    in each cell using counters. Once counters hits 0 (all of the values in the cell have been added in), we choose another number from 1 to
+    4 (inclusive), which will decide howmany values the next cell stores. Each cell will have a corresponding number (we will call this the
+    cell's 'id') given to it, and that 'id' number will be saved and stored in t. Each key in t will be equal to the coordinates of each 
+    value that are in that 'cell'.
+    We go to the next coordinate by either going up, left, down, or, right, given whatever current coordinate we are in. We check if that 
+    next coordinate is valid (i.e., in the bounds of the board) by using the is_valid() function. Once the board has been completely filled
+    out (i.e., there are no more empty cells, or, 0s, in the board), we save that board in 'splitted_board', and stop all recursion stack
+    calls.
+    '''
+    
     global splitted_board, trackings
     if splitted_board != -1:
         return
@@ -74,7 +101,6 @@ def split_out_board(board, counters, curr_ss, curr_i, curr_j, t):
         curr_ss += 1
         t[curr_ss] = []
     pathways = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-    # random.shuffle(pathways);
     for ni, nj in pathways:
         next_i = curr_i + ni
         next_j = curr_j + nj
@@ -89,10 +115,6 @@ def split_out_board(board, counters, curr_ss, curr_i, curr_j, t):
 
 carve_out_board(board, 0, 0)
 split_out_board(board, 0, 0, 0, 0, {})
-
-for row in carved_board:
-    print(row)
-print("\n")
 
 the_operations = {}
 for key in trackings:
