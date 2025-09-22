@@ -2,6 +2,7 @@ import random
 import copy
 from reportlab.pdfgen import canvas
 
+#This is for the command line. It will take in the user's input!
 while True:
     n1 = int(
         input(
@@ -10,12 +11,13 @@ while True:
     )
     if 3 <= n1 <= 9:
         break
+        
+#Creates the board. A 0 denotes an empty cell.
 WIDTH = n1
 HEIGHT = n1
 board = [[0 for _ in range(WIDTH)] for _ in range(HEIGHT)]
 
 carved_board = -1
-
 
 def is_valid(x, y):
     
@@ -24,7 +26,6 @@ def is_valid(x, y):
     '''
     
     return 0 <= x < WIDTH and 0 <= y < HEIGHT
-
 
 def carve_out_board(board, curr_i, curr_j):
 
@@ -254,10 +255,12 @@ def draw_out_canvas():
                 my_canvas.drawString(curr_j + 3, tempf - curr_i + 34, f"{n1}, {key1}")
             ares_dones[col] = True
 
-'''
-The same logic as the draw_out_canvas() function, but now, we are writing in the answers. So, this function is for creating the answer key.
-'''
 def draw_out_answers(my_canvas):
+    
+    '''
+    The same logic as the draw_out_canvas() function, but now, we are writing in the answers. So, this function is for creating the answer key.
+    '''
+    
     ares_dones = {}
     my_canvas.setLineWidth(1)
     tempf = WIDTH * q
