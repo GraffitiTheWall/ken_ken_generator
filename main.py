@@ -116,6 +116,14 @@ def split_out_board(board, counters, curr_ss, curr_i, curr_j, t):
 carve_out_board(board, 0, 0)
 split_out_board(board, 0, 0, 0, 0, {})
 
+'''
+This program then proceeds to iterating through each 'id' in trackings, and, choosing an operation for that 'id', or, cell. For example,
+an 'id' with one value in it will have no operation ('key_opp'). With a length of two, however, it could have two operations: either
+division or subtraction. With a length of greater than two, it's operation could be either of the following: multiplication or addition.
+Once an operation is chosen, that operation 'key_opp' and the answer (evaluating all the numbers based off of that 'key_opp', stored
+in 'evaluation') will be stored in 'the_operation', along with the cell's 'id', or, 'key'.
+'''
+
 the_operations = {}
 for key in trackings:
     if len(trackings[key]) == 0:
@@ -178,6 +186,14 @@ my_answers = canvas.Canvas(
 
 
 def draw_out_canvas():
+    
+    '''
+    This function is used for carving out the board into a pdf file using reportlab. To create the borders, it checks for each bound: upper,
+    lower, left, and right bounds for drawing out the 'lines', or, the 'borders', using the 'splitted_board' nested array inside of the 
+    canvas file. It writes the key_operation along with the needed value at the top of each cell. It then outputs the canvas as a pdf file
+    for the user to use.
+    '''
+    
     ares_dones = {}
     my_canvas.setLineWidth(1)
     tempf = WIDTH * q
@@ -238,7 +254,9 @@ def draw_out_canvas():
                 my_canvas.drawString(curr_j + 3, tempf - curr_i + 34, f"{n1}, {key1}")
             ares_dones[col] = True
 
-
+'''
+The same logic as the draw_out_canvas() function, but now, we are writing in the answers. So, this function is for creating the answer key.
+'''
 def draw_out_answers(my_canvas):
     ares_dones = {}
     my_canvas.setLineWidth(1)
