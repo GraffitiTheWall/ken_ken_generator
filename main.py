@@ -203,7 +203,6 @@ def draw_out_canvas():
                 right_bound = True
             if upper_bound == True:
                 my_canvas.setLineWidth(5)
-                # print(curr_i + 25 , col);
                 my_canvas.line(
                     curr_j, tempf - curr_i + q, curr_j + q, tempf - curr_i + q
                 )
